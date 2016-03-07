@@ -111,6 +111,7 @@ set foldlevel=99
 nnoremap <space> za
 
 autocmd BufWinEnter *.py setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
+let g:SimpylFold_docstring_preview = 1
 autocmd BufWinLeave *.py setlocal foldexpr< foldmethod<
 
 " set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/

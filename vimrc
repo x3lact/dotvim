@@ -91,9 +91,6 @@ nnoremap <CR> :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 
 " Re-Open Previously Opened File
 nnoremap <Leader><Leader> :e#<CR>
-
-" reindex everything by <leader>+r - plugin command-T
-nnoremap <Leader>r :CommandTFlush<CR>
 nnoremap <Leader>b ::CtrlPBuffer<CR>
 
 " NERDTree
@@ -116,7 +113,7 @@ nnoremap <space> za
 autocmd BufWinEnter *.py setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
 autocmd BufWinLeave *.py setlocal foldexpr< foldmethod<
 
-set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
+" set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
 
 " Always show statusline
 set laststatus=2

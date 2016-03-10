@@ -103,6 +103,9 @@ if has("gui_macvim")
   autocmd VimEnter * NERDTree
   autocmd VimEnter * wincmd p
 endif
+"Open NERDTree if no files specified
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " Enable folding
 set foldmethod=indent
@@ -118,6 +121,17 @@ autocmd BufWinLeave *.py setlocal foldexpr< foldmethod<
 
 " Always show statusline
 set laststatus=2
+
+set ttimeoutlen=50
+let g:airline#extensions#hunks#enabled=0
+let g:airline#extensions#branch#enabled=1
+
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
+
+
 
 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
 set t_Co=256

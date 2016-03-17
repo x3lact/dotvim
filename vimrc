@@ -96,6 +96,8 @@ nnoremap <Leader>b ::CtrlPBuffer<CR>
 " NERDTree
 let NERDTreeMapActivateNode='<right>'
 let NERDTreeShowHidden=1
+let NERDTreeShowBookmarks=1
+let g:NERDTreeWinSize = 35
 nmap <leader>. :NERDTreeToggle<CR>
 nmap <leader>j :NERDTreeFind<CR>
 let NERDTreeIgnore=['\.DS_Store', '\~$', '\.git', '\.sass-cache', '\.swp']
@@ -103,6 +105,7 @@ if has("gui_macvim")
   autocmd VimEnter * NERDTree
   autocmd VimEnter * wincmd p
 endif
+let g:NERDTreeBookmarksFile = '/home/ecefjmo/.vim/.nerdtreebookmarks'
 "Open NERDTree if no files specified
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
@@ -131,6 +134,8 @@ if !exists('g:airline_symbols')
 endif
 let g:airline_symbols.space = "\ua0"
 
+set swapfile
+set dir=/home/ecefjmo/.vimswap
 
 
 " Use 256 colours (Use this setting only if your terminal supports 256 colours)

@@ -135,7 +135,7 @@ endif
 let g:airline_symbols.space = "\ua0"
 
 set swapfile
-set dir=/home/ecefjmo/.vimswap
+set dir=$HOME/.vimswap
 
 
 " Use 256 colours (Use this setting only if your terminal supports 256 colours)

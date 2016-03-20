@@ -29,9 +29,9 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" Open and source vimrc easily
-nnoremap <leader>c :e ~/.vimrc<CR>
-nnoremap <leader>s :source ~/.vimrc<CR>
+" Quickly edit/reload the vimrc file
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
 " Number of spaces for tabs
 set tabstop=2

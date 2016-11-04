@@ -157,3 +157,8 @@ xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
 
 map + <c-w>>
 map - <c-w><
+
+
+" To be able to use find command inside vim to search a filename under current
+" folder
+set path+=**

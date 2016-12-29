@@ -164,3 +164,4 @@ endif
 
 let b:current_syntax = "ttcn"
 
+

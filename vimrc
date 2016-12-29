@@ -1,65 +1,80 @@
-execute pathogen#infect()
+" -lSample .vimrc file by Martin Brochhaus
+" Presented at PyCon APAC 2012
 
-filetype on
-filetype plugin on
-set hidden
-set history=100
 
-" Enable syntax highlighting
-syntax on
+" ============================================
+" Note to myself:
+" DO NOT USE <C-z> FOR SAVING WHEN PRESENTING!
+" ============================================
 
-colorscheme molokai
 
-let g:lightline = {
-      \ 'colorscheme': 'default',
-      \ }
+" Automatic reloading of .vimrc
+autocmd! bufwritepost .vimrc source %
 
-set guifont=Menlo\ Regular:h18
 
-" Enable UTF-8 encoding
-set encoding=utf-8
+" Better copy & paste
+" When you want to paste large blocks of code into vim, press F2 before you
+" paste. At the bottom you should see ``-- INSERT (paste) --``.
 
-" remap <leader> to ',' key
+set pastetoggle=<F2>
+set clipboard=unnamed
+
+
+" Rebind <Leader> key
+" I like to have it here becuase it is easier to reach than the default and
+" it is next to ``m`` and ``n`` which I use for navigating between tabs.
 let mapleader = ","
 
-" easy handling of split windows
-nnoremap <leader>w <C-w>v<C-w>l
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
 
-" Quickly edit/reload the vimrc file
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
-
-" Number of spaces for tabs
-set tabstop=2
-" Number of spaces for each step of autoindent
-set shiftwidth=2
-" Expand tabs to spaces
-set expandtab
-" Do smart autoindenting
-set smartindent
-" Copy indentation of current line when starting a new line
-set autoindent
-
-autocmd FileType python setlocal shiftwidth=4 tabstop=4
-autocmd FileType sh setlocal shiftwidth=4 tabstop=4
-autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
-autocmd FileType vim setlocal shiftwidth=2 tabstop=2
-
-" Enable highlighting search results
-set hlsearch
-set incsearch
-
-"Show Matching Parenthesis
-set showmatch
-
-" Ignore case in search patterns
-set ignorecase
-set smartcase
+" Bind nohl
+" Removes highlight of your last search
+" ``<C>`` stands for ``CTRL`` and therefore ``<C-n>`` stands for ``CTRL+n``
+noremap <C-n> :nohl<CR>
+vnoremap <C-n> :nohl<CR>
+inoremap <C-n> :nohl<CR>
 nnoremap <leader><space> :noh<cr>
+
+
+" Quicksave command
+noremap <C-Z> :update<CR>
+vnoremap <C-Z> <C-C>:update<CR>
+inoremap <C-Z> <C-O>:update<CR>
+
+
+" Quick quit command
+noremap <Leader>e :quit<CR>  " Quit current window
+noremap <Leader>E :qa!<CR>   " Quit all windows
+
+
+" bind Ctrl+<movement> keys to move around the windows, instead of using
+" Ctrl+w + <movement>
+" Every unnecessary keystroke that can be saved is good for your health :)
+map <c-j> <c-w>j
+map <c-k> <c-w>k
+map <c-l> <c-w>l
+map <c-h> <c-w>h
+
+
+" easier moving between tabs
+map <Leader>n <esc>:tabprevious<CR>
+map <Leader>m <esc>:tabnext<CR>
+
+
+" map sort function to a key
+vnoremap <Leader>s :sort<CR>
+
+
+" easier moving of code blocks
+" Try to go into visual mode (v), thenselect several lines of code here and
+" then press ``>`` several times.
+vnoremap < <gv  " better indentation
+vnoremap > >gv  " better indentation
+
+
+" Show whitespace
+" MUST be inserted BEFORE the colorscheme command
+" autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+" au InsertLeave * match ExtraWhitespace /\s\+$/
 
 " Highlight trailing whitespaces
 highlight Error ctermbg=red ctermfg=white guibg=red guifg=white
@@ -70,28 +85,117 @@ autocmd InsertEnter * match Error /\s\+\%#\@<!$/
 autocmd InsertLeave * match Error /\s\+$/
 autocmd WinLeave,BufWinLeave * match Error //
 
+
+
+" Color scheme
+set t_Co=256
+color wombat256mod
+
+
+" Enable syntax highlighting
+" You need to reload this file for the change to apply
+filetype plugin indent on
+syntax on
+
+set omnifunc=syntaxcomplete#Complete
+
+
+" Showing line numbers and length
+"" set number  " show line numbers
+"" set tw=79   " width of document (used by gd)
+"" set nowrap  " don't automatically wrap on load
+"" set fo-=t   " don't automatically wrap text when typing
+"" set colorcolumn=80
+"" highlight ColorColumn ctermbg=233
+
+
+" easier formatting of paragraphs
+vmap Q gq
+nmap Q gqap
+
+
+" Useful settings
+set history=700
+set undolevels=700
+
+
+" Real programmers don't use TABs but spaces
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set shiftround
+set expandtab
+
+
+" Make search case insensitive
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+
+
+" Disable stupid backup and swap files - they trigger too many events
+" for file system watchers
+set nobackup
+set nowritebackup
+set noswapfile
+
 " strip all trailing whitespace in the current file with <leader>W
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
-" F2: Toggle paste mode to avoid screwing indentation
-nnoremap <F2> :set invpaste paste?<CR>
-set pastetoggle=<F2>
-set showmode
-set scrolloff=5
 
-" Allow command completion
-set wildmode=longest,list,full
-set wildmenu
+" Setup Pathogen to manage your plugins
+call pathogen#infect()
 
-" Allow saving of files as sudo when I forgot to start vim using sudo.
-cmap w!! w !sudo tee > /dev/null %
 
-" <CR> highlights all occurences of the current word without moving
-nnoremap <CR> :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+
+"
+"============================================================================
+" Python IDE Setup
+"
+"============================================================================
+
+
+" Settings for vim-powerline
+" cd ~/.vim/bundle
+" git clone git://github.com/Lokaltog/vim-powerline.git
+set laststatus=2
+
+
+" Settings for ctrlp
+" cd ~/.vim/bundle
+" git clone https://github.com/kien/ctrlp.vim.git
+let g:ctrlp_max_height = 30
+set wildignore+=*.pyc
+set wildignore+=*_build/*
+set wildignore+=*/coverage/*
+
+" Settings for jedi-vim
+" cd ~/.vim/bundle
+" git clone git://github.com/davidhalter/jedi-vim.git
+let g:jedi#usages_command = "<leader>z"
+let g:jedi#popup_on_dot = 0
+let g:jedi#popup_select_first = 0
+map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-c>
+
+" Better navigating through omnicomplete option list
+set completeopt=longest,menuone
+function! OmniPopup(action)
+    if pumvisible()
+        if a:action == 'j'
+            return "\<C-N>"
+        elseif a:action == 'k'
+            return "\<C-P>"
+        endif
+    endif
+    return a:action
+endfunction
+
+inoremap <silent><C-j> <C-R>=OmniPopup('j')<CR>
+inoremap <silent><C-k> <C-R>=OmniPopup('k')<CR>
 
 " Re-Open Previously Opened File
 nnoremap <Leader><Leader> :e#<CR>
-nnoremap <Leader>b ::CtrlPBuffer<CR>
 
 " NERDTree
 let NERDTreeMapActivateNode='<right>'
@@ -100,7 +204,7 @@ let NERDTreeShowBookmarks=1
 let g:NERDTreeWinSize = 35
 nmap <leader>. :NERDTreeToggle<CR>
 nmap <leader>j :NERDTreeFind<CR>
-let NERDTreeIgnore=['\.DS_Store', '\~$', '\.git', '\.sass-cache', '\.swp']
+let NERDTreeIgnore=['\.git', '\.swp']
 if has("gui_macvim")
   autocmd VimEnter * NERDTree
   autocmd VimEnter * wincmd p
@@ -110,55 +214,18 @@ let g:NERDTreeBookmarksFile = '/home/ecefjmo/.vim/.nerdtreebookmarks'
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
+map + <c-w>>
+map - <c-w><
+
 " Enable folding
 set foldmethod=indent
 set foldlevel=99
 " Enable folding with the spacebar
 nnoremap <space> za
 
-autocmd BufWinEnter *.py setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
-let g:SimpylFold_docstring_preview = 1
-autocmd BufWinLeave *.py setlocal foldexpr< foldmethod<
+autocmd FileType python setlocal shiftwidth=4 tabstop=4
+autocmd FileType sh setlocal shiftwidth=4 tabstop=4
+autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
+autocmd FileType vim setlocal shiftwidth=2 tabstop=2
 
-" set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
-
-" Always show statusline
-set laststatus=2
-
-set ttimeoutlen=50
-let g:airline#extensions#hunks#enabled=0
-let g:airline#extensions#branch#enabled=1
-
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-let g:airline_symbols.space = "\ua0"
-
-set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
-" F3: Toggle list (display unprintable characters).
-nnoremap <F3> :set list!<CR>
-
-set swapfile
-set dir=$HOME/.vimswap
-
-
-" Use 256 colours (Use this setting only if your terminal supports 256 colours)
-set t_Co=256
-
-function! s:VSetSearch(cmdtype)
-  let temp = @s
-  norm! gv"sy
-  let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
-  let @s = temp
-endfunction
-
-xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
-xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
-
-map + <c-w>>
-map - <c-w><
-
-
-" To be able to use find command inside vim to search a filename under current
-" folder
-set path+=**
+set tags=./tags;/

@@ -76,6 +76,9 @@ vnoremap > >gv  " better indentation
 " autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 " au InsertLeave * match ExtraWhitespace /\s\+$/
 
+" <CR> highlights all occurences of the current word without moving
+nnoremap <CR> :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+
 " Highlight trailing whitespaces
 highlight Error ctermbg=red ctermfg=white guibg=red guifg=white
 autocmd ColorScheme * highlight Error ctermbg=red ctermfg=white guibg=red guifg=white

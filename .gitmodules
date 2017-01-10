@@ -5,9 +5,17 @@
     path = bundle/jedi-vim
     url = git@github.com:davidhalter/jedi-vim.git
 [submodule "bundle/nerdtree"]
-    path = bundle/nerdtree
-    url = git@github.com:scrooloose/nerdtree.git
+	path = bundle/nerdtree
+	url = git@github.com:scrooloose/nerdtree.git
 [submodule "bundle/vim-powerline"]
     path = bundle/vim-powerline
     url = git@github.com:Lokaltog/vim-powerline.git
-    
+[submodule "bundle/airline"]
+	path = bundle/airline
+	url = https://github.com/vim-airline/vim-airline
+[submodule "bundle/SimpylFold"]
+	path = bundle/SimpylFold
+	url = https://github.com/tmhedberg/SimpylFold.git
+[submodule "bundle/vim-powerline"]
+	path = bundle/vim-powerline
+	url = git@github.com:Lokaltog/vim-powerline.git

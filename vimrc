@@ -200,6 +200,7 @@ inoremap <silent><C-k> <C-R>=OmniPopup('k')<CR>
 
 " Re-Open Previously Opened File
 nnoremap <Leader><Leader> :e#<CR>
+nnoremap <Leader>b ::CtrlPBuffer<CR>
 
 " NERDTree
 let NERDTreeMapActivateNode='<right>'
